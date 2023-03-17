@@ -113,4 +113,4 @@ while [ "$done" == false ]; do
 done
 
 # Remove lib.sh, so next time the script is run the, newest version is downloaded.
-rm -rf /tmp/lib.sh
+rm -rf /tmp/biblioteca.sh
