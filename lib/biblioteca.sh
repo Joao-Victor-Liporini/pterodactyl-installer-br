@@ -158,10 +158,10 @@ get_latest_versions() {
 
 update_lib_source() {
   GITHUB_URL="$GITHUB_BASE_URL/$GITHUB_SOURCE"
-  rm -rf /tmp/lib.sh
-  curl -sSL -o /tmp/biblioteca.sh "$GITHUB_URL"/lib/lib.sh
+  rm -rf /tmp/biblioteca.sh
+  curl -sSL -o /tmp/biblioteca.sh "$GITHUB_URL"/lib/biblioteca.sh
   # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh
+  source /tmp/biblioteca.sh
 }
 
 run_installer() {
