@@ -80,8 +80,8 @@ while [ "$done" == false ]; do
 
     "Instalar o Painel com versão canária do script (as versões que vivem em mestre, podem ser quebradas!)"
     "Instalar o Wings com versão canária do script (as versões que vivem em mestre, podem ser quebradas!)"
-    "Instalar ambos [3] e [4] na mesma máquina (o roteiro das asas corre depois do painel)"
-    "Desinstalar painel ou asas com versão canária do guião (as versões que vivem em mestre, podem ser quebradas!)"
+    "Instalar ambos [3] e [4] na mesma máquina (o script do wings funciona depois do painel)"
+    "Desinstalar painel ou asas com versão canária do script (as versões que vivem em mestre, podem ser quebradas!)"
   )
 
   actions=(
