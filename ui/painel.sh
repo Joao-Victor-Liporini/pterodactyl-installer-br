@@ -78,7 +78,7 @@ ask_letsencrypt() {
   echo -e -n "* Quer configurar automaticamente HTTPS usando Let's Encrypt? (s/N): "
   read -r CONFIRM_SSL
 
-  if [[ "$CONFIRM_SSL" =~ [Ss] ]]; then
+  if [[ "$CONFIRM_SSL" =~ [SsYy] ]]; then
     CONFIGURE_LETSENCRYPT=true
     ASSUME_SSL=false
   fi
@@ -91,7 +91,7 @@ ask_assume_ssl() {
   echo -n "* Usar SSL ou não? (s/N): "
   read -r ASSUME_SSL_INPUT
 
-  [[ "$ASSUME_SSL_INPUT" =~ [Ss] ]] && ASSUME_SSL=true
+  [[ "$ASSUME_SSL_INPUT" =~ [SsYy] ]] && ASSUME_SSL=true
   true
 }
 
@@ -110,7 +110,7 @@ main() {
     warning "O script detectou que já tem o Painel Pterodactyl no seu sistema! Não pode executar o script várias vezes, ele falhará!"
     echo -e -n "* Tem certeza que quer prosseguir? (s/N): "
     read -r CONFIRM_PROCEED
-    if [[ ! "$CONFIRM_PROCEED" =~ [Ss] ]]; then
+    if [[ ! "$CONFIRM_PROCEED" =~ [SsYy] ]]; then
       error "Instalação abortada!"
       exit 1
     fi
@@ -171,8 +171,11 @@ main() {
   # set FQDN
   while [ -z "$FQDN" ]; do
     echo -n "* Defina o registro SRV (FQDN) deste painel (painel.exemplo.com.br): "
+    echo -n ""
     echo -n "* OBS: Isto não irá setar no seu provedor de dominios ex: (Cloudflare) "
+    echo -n ""
     echo -n "* Você deverá ir no seu painel de dominios ex: (Cloudflare) e definir "
+    echo -n ""
     echo -n "* Manualmente o registro SRV (FQDN). "
     read -r FQDN
     [ -z "$FQDN" ] && error "O registro SRV (FQDN) não pode estar vazio"
@@ -201,7 +204,7 @@ main() {
   # confirm installation
   echo -e -n "\n* Configuração inicial concluída. Continuar com a instalação? (s/N): "
   read -r CONFIRM
-  if [[ "$CONFIRM" =~ [Ss] ]]; then
+  if [[ "$CONFIRM" =~ [SsYy] ]]; then
     run_installer "painel"
   else
     error "Instalação abortada."
