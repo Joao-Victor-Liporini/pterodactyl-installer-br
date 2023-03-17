@@ -2,38 +2,42 @@
 
 set -e
 
-######################################################################################
-#                                                                                    #
-# Project 'pterodactyl-installer'                                                    #
-#                                                                                    #
-# Copyright (C) 2018 - 2023, Vilhelm Prytz, <vilhelm@prytznet.se>                    #
-#                                                                                    #
-#   This program is free software: you can redistribute it and/or modify             #
-#   it under the terms of the GNU General Public License as published by             #
-#   the Free Software Foundation, either version 3 of the License, or                #
-#   (at your option) any later version.                                              #
-#                                                                                    #
-#   This program is distributed in the hope that it will be useful,                  #
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of                   #
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    #
-#   GNU General Public License for more details.                                     #
-#                                                                                    #
-#   You should have received a copy of the GNU General Public License                #
-#   along with this program.  If not, see <https://www.gnu.org/licenses/>.           #
-#                                                                                    #
-# https://github.com/pterodactyl-installer/pterodactyl-installer/blob/master/LICENSE #
-#                                                                                    #
-# This script is not associated with the official Pterodactyl Project.               #
-# https://github.com/pterodactyl-installer/pterodactyl-installer                     #
-#                                                                                    #
-######################################################################################
+######################################################################################## 
+#                                                                                      #
+# Projeto 'pterodactyl-installer-br'                                                   #
+#                                                                                      #
+# Copyright (C) 2018 - 2023, Vilhelm Prytz, <vilhelm@prytznet.se>                      #
+#                                                                                      #
+#   Este programa é software livre: pode redistribuí-lo e/ou modificá-lo               #
+#   nos termos da Licença Pública Geral GNU, tal como publicada por                    #
+#   Free Software Foundation, requer a versão 3 da Licença, requer                     #
+#   (à sua escolha) qualquer versão posterior.                                         #
+#                                                                                      #
+#   Este programa é distribuído na esperança de que venha a ser útil,                  #
+#   mas SEM QUALQUER GARANTIA; sem sequer a garantia implícita de                      #
+#   MERCANTABILIDADE ou ADEQUAÇÃO PARA UM FINAL PARTICULAR. Veja o                     #
+#   GNU General Public License para mais detalhes.                                     #
+#                                                                                      #
+#   Você deverá ter recebido uma cópia da Licença Pública Geral GNU                    #
+#   juntamente com este programa.  Caso contrário, veja                                #
+#   <https://www.gnu.org/licenses/>.                                                   #
+#                                                                                      #
+# https://github.com/Joao-Victor-Liporini/pterodactyl-installer-br/blob/master/LICENSE #
+#                                                                                      #
+# Este script não está associado ao Projecto oficial Pterodactyl-BR, Nem mesmo ao      #
+# Projeto oficial Pterodactyl                                                          #
+# https://github.com/Next-Panel/Pterodactyl-BR                                         #
+# https://github.com/pterodactyl/panel                                                 #
+#                                                                                      #
+########################################################################################
+
 
 # Check if script is loaded, load if not or fail otherwise.
 fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
   source /tmp/lib.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/lib.sh)
-  ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
+  ! fn_exists lib_loaded && echo "* ERRO: Não foi possível carregar o script da biblioteca" && exit 1
 fi
 
 # ------------------ Variables ----------------- #
@@ -44,37 +48,37 @@ RM_WINGS="${RM_WINGS:-true}"
 # ---------- Uninstallation functions ---------- #
 
 rm_panel_files() {
-  output "Removing panel files..."
+  output "Removendo os arquivos do painel..."
   rm -rf /var/www/pterodactyl /usr/local/bin/composer
   [ "$OS" != "centos" ] && unlink /etc/nginx/sites-enabled/pterodactyl.conf
   [ "$OS" != "centos" ] && rm -f /etc/nginx/sites-available/pterodactyl.conf
   [ "$OS" != "centos" ] && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
   [ "$OS" == "centos" ] && rm -f /etc/nginx/conf.d/pterodactyl.conf
   systemctl restart nginx
-  success "Removed panel files."
+  success "Removidos os arquivos do painel."
 }
 
 rm_docker_containers() {
-  output "Removing docker containers and images..."
+  output "Removendo os contêineres e imagens do docker..."
 
   docker system prune -a -f
 
-  success "Removed docker containers and images."
+  success "contêineres e imagens do docker Removidos."
 }
 
 rm_wings_files() {
-  output "Removing wings files..."
+  output "Removendo os arquivos do wings..."
 
   # stop and remove wings service
   systemctl disable --now wings
   rm -rf /etc/systemd/system/wings.service
 
   rm -rf /etc/pterodactyl /usr/local/bin/wings /var/lib/pterodactyl
-  success "Removed wings files."
+  success "Arquivos do wings removidos."
 }
 
 rm_services() {
-  output "Removing services..."
+  output "Removendo serviços..."
   systemctl disable --now pteroq
   rm -rf /etc/systemd/system/pteroq.service
   case "$OS" in
@@ -87,17 +91,17 @@ rm_services() {
     rm -rf /etc/php-fpm.d/www-pterodactyl.conf
     ;;
   esac
-  success "Removed services."
+  success "Serviços removidos."
 }
 
 rm_cron() {
-  output "Removing cron jobs..."
+  output "Removendo cron jobs..."
   crontab -l | grep -vF "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1" | crontab -
-  success "Removed cron jobs."
+  success "Cron jobs removidos."
 }
 
 rm_database() {
-  output "Removing database..."
+  output "Removendo a database..."
   valid_db=$(mysql -u root -e "SELECT schema_name FROM information_schema.schemata;" | grep -v -E -- 'schema_name|information_schema|performance_schema|mysql')
   warning "Be careful! This database will be deleted!"
   if [[ "$valid_db" == *"panel"* ]]; then
@@ -112,7 +116,7 @@ rm_database() {
     print_list "$valid_db"
   fi
   while [ -z "$DATABASE" ] || [[ $valid_db != *"$database_input"* ]]; do
-    echo -n "* Choose the panel database (to skip don't input anything): "
+    echo -n "* Escolha a database do painel (Para pular, não insira nada): "
     read -r database_input
     if [[ -n "$database_input" ]]; then
       DATABASE="$database_input"
@@ -122,13 +126,13 @@ rm_database() {
   done
   [[ -n "$DATABASE" ]] && mysql -u root -e "DROP DATABASE $DATABASE;"
   # Exclude usernames User and root (Hope no one uses username User)
-  output "Removing database user..."
+  output "Removendo o utilizador da database..."
   valid_users=$(mysql -u root -e "SELECT user FROM mysql.user;" | grep -v -E -- 'user|root')
-  warning "Be careful! This user will be deleted!"
+  warning "Tenha cuidado! Este utilizador será eliminado!"
   if [[ "$valid_users" == *"pterodactyl"* ]]; then
-    echo -n "* User called pterodactyl has been detected. Is it the pterodactyl user? (y/N): "
+    echo -n "* Utilizador chamado pterodactyl foi detectado. É o utilizador do pterodactyl (s/N): "
     read -r is_user
-    if [[ "$is_user" =~ [Yy] ]]; then
+    if [[ "$is_user" =~ [Ss] ]]; then
       DB_USER=pterodactyl
     else
       print_list "$valid_users"
@@ -137,7 +141,7 @@ rm_database() {
     print_list "$valid_users"
   fi
   while [ -z "$DB_USER" ] || [[ $valid_users != *"$user_input"* ]]; do
-    echo -n "* Choose the panel user (to skip don't input anything): "
+    echo -n "* Escolha o utilizador do painel (para pular não inserir nada): "
     read -r user_input
     if [[ -n "$user_input" ]]; then
       DB_USER=$user_input
@@ -147,7 +151,7 @@ rm_database() {
   done
   [[ -n "$DB_USER" ]] && mysql -u root -e "DROP USER $DB_USER@'127.0.0.1';"
   mysql -u root -e "FLUSH PRIVILEGES;"
-  success "Removed database and database user."
+  success "Removido a database e utilizador da database."
 }
 
 # --------------- Main functions --------------- #
