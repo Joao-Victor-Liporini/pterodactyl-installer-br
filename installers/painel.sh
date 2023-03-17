@@ -89,7 +89,7 @@ if [[ -z "${user_firstname}" ]]; then
 fi
 
 if [[ -z "${user_lastname}" ]]; then
-  error "O sobrenome nome do utilizador é obrigatório"
+  error "O sobrenome do utilizador é obrigatório"
   exit 1
 fi
 
@@ -283,7 +283,7 @@ alma_rocky_dep() {
 }
 
 dep_install() {
-  output "Instalando dependências para o SO: $OS $OS_VER..."
+  output "Instalando dependências para o SO: $OS Versão: $OS_VER..."
 
   # Update repos before installing
   update_repos
