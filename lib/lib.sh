@@ -130,14 +130,14 @@ welcome() {
   output "Copyright (C) 2023, João Victor"
   output "https://github.com/Joao-Victor-Liporini/pterodactyl-installer-br"
   output ""
-  output "Este script não está associado ao Projecto oficial Pterodactyl-BR."
+  output "Este script não está associado ao Projeto oficial Pterodactyl-BR."
   output "Nem mesmo ao Projeto oficial Pterodactyl."
   output ""
-  output "Rodando no: $OS Versão: $OS_VER."
+  output "Rodando no SO: $OS Versão: $OS_VER."
   if [ "$1" == "panel" ]; then
-    output "Latest pterodactyl/panel is $PTERODACTYL_PANEL_VERSION"
+    output "O Lançamento mais recente do Painel Next-Panel/Pterodactyl-BR é $PTERODACTYL_PANEL_VERSION"
   elif [ "$1" == "wings" ]; then
-    output "Latest pterodactyl/wings is $PTERODACTYL_WINGS_VERSION"
+    output "O Lançamento mais recente do Wings pterodactyl/wings é $PTERODACTYL_WINGS_VERSION"
   fi
   print_brake 70
 }
@@ -152,7 +152,7 @@ get_latest_release() {
 
 get_latest_versions() {
   output "Retrieving release information..."
-  PTERODACTYL_PANEL_VERSION=$(get_latest_release "pterodactyl/panel")
+  PTERODACTYL_PANEL_VERSION=$(get_latest_release "Next-Panel/Pterodactyl-BR")
   PTERODACTYL_WINGS_VERSION=$(get_latest_release "pterodactyl/wings")
 }
 
