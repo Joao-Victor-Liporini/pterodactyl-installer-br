@@ -2,38 +2,42 @@
 
 set -e
 
-######################################################################################
-#                                                                                    #
-# Project 'pterodactyl-installer'                                                    #
-#                                                                                    #
-# Copyright (C) 2018 - 2023, Vilhelm Prytz, <vilhelm@prytznet.se>                    #
-#                                                                                    #
-#   This program is free software: you can redistribute it and/or modify             #
-#   it under the terms of the GNU General Public License as published by             #
-#   the Free Software Foundation, either version 3 of the License, or                #
-#   (at your option) any later version.                                              #
-#                                                                                    #
-#   This program is distributed in the hope that it will be useful,                  #
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of                   #
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    #
-#   GNU General Public License for more details.                                     #
-#                                                                                    #
-#   You should have received a copy of the GNU General Public License                #
-#   along with this program.  If not, see <https://www.gnu.org/licenses/>.           #
-#                                                                                    #
-# https://github.com/pterodactyl-installer/pterodactyl-installer/blob/master/LICENSE #
-#                                                                                    #
-# This script is not associated with the official Pterodactyl Project.               #
-# https://github.com/pterodactyl-installer/pterodactyl-installer                     #
-#                                                                                    #
-######################################################################################
+######################################################################################## 
+#                                                                                      #
+# Projeto 'pterodactyl-installer-br'                                                   #
+#                                                                                      #
+# Copyright (C) 2018 - 2023, Vilhelm Prytz, <vilhelm@prytznet.se>                      #
+#                                                                                      #
+#   Este programa é software livre: pode redistribuí-lo e/ou modificá-lo               #
+#   nos termos da Licença Pública Geral GNU, tal como publicada por                    #
+#   Free Software Foundation, requer a versão 3 da Licença, requer                     #
+#   (à sua escolha) qualquer versão posterior.                                         #
+#                                                                                      #
+#   Este programa é distribuído na esperança de que venha a ser útil,                  #
+#   mas SEM QUALQUER GARANTIA; sem sequer a garantia implícita de                      #
+#   MERCANTABILIDADE ou ADEQUAÇÃO PARA UM FINAL PARTICULAR. Veja o                     #
+#   GNU General Public License para mais detalhes.                                     #
+#                                                                                      #
+#   Você deverá ter recebido uma cópia da Licença Pública Geral GNU                    #
+#   juntamente com este programa.  Caso contrário, veja                                #
+#   <https://www.gnu.org/licenses/>.                                                   #
+#                                                                                      #
+# https://github.com/Joao-Victor-Liporini/pterodactyl-installer-br/blob/master/LICENSE #
+#                                                                                      #
+# Este script não está associado ao Projecto oficial Pterodactyl-BR, Nem mesmo ao      #
+# Projeto oficial Pterodactyl                                                          #
+# https://github.com/Next-Panel/Pterodactyl-BR                                         #
+# https://github.com/pterodactyl/panel                                                 #
+#                                                                                      #
+########################################################################################
+
 
 # Check if script is loaded, load if not or fail otherwise.
 fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
   source /tmp/lib.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/lib.sh)
-  ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
+  ! fn_exists lib_loaded && echo "* ERRO: Não foi possível carregar o script da biblioteca" && exit 1
 fi
 
 # ------------------ Variables ----------------- #
@@ -56,7 +60,7 @@ MYSQL_DBHOST_USER="${MYSQL_DBHOST_USER:-pterodactyluser}"
 MYSQL_DBHOST_PASSWORD="${MYSQL_DBHOST_PASSWORD:-}"
 
 if [[ $CONFIGURE_DBHOST == true && -z "${MYSQL_DBHOST_PASSWORD}" ]]; then
-  error "Mysql database host user password is required"
+  error "É necessária uma senha para o utilizador host da database MYSQL"
   exit 1
 fi
 
@@ -70,7 +74,7 @@ enable_services() {
 }
 
 dep_install() {
-  output "Installing dependencies for $OS $OS_VER..."
+  output "Instalando de dependências para o SO: $OS $OS_VER..."
 
   [ "$CONFIGURE_FIREWALL" == true ] && install_firewall && firewall_ports
 
@@ -110,45 +114,45 @@ dep_install() {
 
   enable_services
 
-  success "Dependencies installed!"
+  success "Dependências instaladas!"
 }
 
 ptdl_dl() {
-  echo "* Downloading Pterodactyl Wings.. "
+  echo "* Baixando o Pterodactyl Wings.. "
 
   mkdir -p /etc/pterodactyl
   curl -L -o /usr/local/bin/wings "$WINGS_DL_BASE_URL$ARCH"
 
   chmod u+x /usr/local/bin/wings
 
-  success "Pterodactyl Wings downloaded successfully"
+  success "O Pterodactyl Wings foi baixado com sucesso"
 }
 
 systemd_file() {
-  output "Installing systemd service.."
+  output "Instalando o serviço systemd..."
 
   curl -o /etc/systemd/system/wings.service "$GITHUB_URL"/configs/wings.service
   systemctl daemon-reload
   systemctl enable wings
 
-  success "Installed systemd service!"
+  success "Serviço systemd instalado!"
 }
 
 firewall_ports() {
-  output "Opening port 22 (SSH), 8080 (Wings Port), 2022 (Wings SFTP Port)"
+  output "Abrindo portas 22 (SSH), 8080 (Porta do Wings), 2022 (Porta SFTP do Wings)"
 
   [ "$CONFIGURE_LETSENCRYPT" == true ] && firewall_allow_ports "80 443"
   [ "$CONFIGURE_DB_FIREWALL" == true ] && firewall_allow_ports "3306"
 
   firewall_allow_ports "22 8080 2022"
 
-  success "Firewall ports opened!"
+  success "Portas do Firewall abertas!"
 }
 
 letsencrypt() {
   FAILED=false
 
-  output "Configuring LetsEncrypt.."
+  output "Configurando o LetsEncrypt.."
 
   # If user has nginx
   systemctl stop nginx || true
@@ -160,20 +164,20 @@ letsencrypt() {
 
   # Check if it succeded
   if [ ! -d "/etc/letsencrypt/live/$FQDN/" ] || [ "$FAILED" == true ]; then
-    warning "The process of obtaining a Let's Encrypt certificate failed!"
+    warning "O processo de obtenção de um certificado Let's Encrypt falhou!"
   else
-    success "The process of obtaining a Let's Encrypt certificate succeeded!"
+    success "O processo de obtenção de um certificado Let's Encrypt foi bem sucedido!"
   fi
 }
 
 configure_mysql() {
-  output "Configuring MySQL.."
+  output "Configurando MySQL.."
 
   create_db_user "$MYSQL_DBHOST_USER" "$MYSQL_DBHOST_PASSWORD" "$MYSQL_DBHOST_HOST"
   grant_all_privileges "*" "$MYSQL_DBHOST_USER" "$MYSQL_DBHOST_HOST"
 
   if [ "$MYSQL_DBHOST_HOST" != "127.0.0.1" ]; then
-    echo "* Changing MySQL bind address.."
+    echo "* Alterando o endereço de conexão MySQL.."
 
     case "$OS" in
     debian | ubuntu)
@@ -187,13 +191,13 @@ configure_mysql() {
     systemctl restart mysqld
   fi
 
-  success "MySQL configured!"
+  success "MySQL configurado!"
 }
 
 # --------------- Main functions --------------- #
 
 perform_install() {
-  output "Installing pterodactyl wings.."
+  output "Instalando pterodactyl wings.."
   dep_install
   ptdl_dl
   systemd_file
