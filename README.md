@@ -56,7 +56,7 @@ _\* Indica um sistema operacional e um lançamento que anteriormente era suporta
 Para utilizar os scripts de instalação, basta executar este comando como super-usuário. O script perguntará se gostaria de instalar apenas o painel, apenas o wings ou ambos.
 
 ```bash
-bash <(curl -s https://bit.ly/pterodactyl-installer-br)
+bash <(curl -s pterodactylbr.alliancecraft.net)
 ```
 
 _Nota: Em alguns sistemas, é necessário já estar logado como root antes de executar o comando de linha única (onde o `sudo` não funciona na frente do comando)..._
