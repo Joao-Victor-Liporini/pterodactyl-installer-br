@@ -107,7 +107,7 @@ install_composer() {
 }
 
 ptdl_dl() {
-  output "Descarregando os arquivos do painel pterodactyl... "
+  output "Baixando os arquivos do painel pterodactyl... "
   mkdir -p /var/www/pterodactyl
   cd /var/www/pterodactyl || exit
 
