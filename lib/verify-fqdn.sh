@@ -33,7 +33,7 @@ fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
   source /tmp/lib.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/lib.sh)
-  ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
+  ! fn_exists lib_loaded && echo "* ERROR: Não foi possível carregar o script da biblioteca" && exit 1
 fi
 
 CHECKIP_URL="https://checkip.pterodactyl-installer.se"
@@ -41,18 +41,18 @@ DNS_SERVER="8.8.8.8"
 
 # exit with error status code if user is not root
 if [[ $EUID -ne 0 ]]; then
-  echo "* This script must be executed with root privileges (sudo)." 1>&2
+  echo "* Este script deve ser executado com privilégios de super-usuário (sudo)." 1>&2
   exit 1
 fi
 
 fail() {
-  output "The DNS record ($dns_record) does not match your server IP. Please make sure the FQDN $fqdn is pointing to the IP of your server, $ip"
-  output "If you are using Cloudflare, please disable the proxy or opt out from Let's Encrypt."
+  output "O registo DNS ($dns_record) não corresponde ao IP do seu servidor. Por favor, tenha certeza de que o registro SRV (FQDN $fqdn) está apontando para o IP do seu servidor, $ip"
+  output "Se estiver utilizando a Cloudflare, por favor desative o proxy ou opte por não usar o Let's Encrypt."
 
-  echo -n "* Proceed anyways (your install will be broken if you do not know what you are doing)? (y/N): "
+  echo -n "* Continue de qualquer forma (a sua instalação será interrompida se não souber o que está fazendo)? (s/N): "
   read -r override
 
-  [[ ! "$override" =~ [Yy] ]] && error "Invalid FQDN or DNS record" && exit 1
+  [[ ! "$override" =~ [Ss] ]] && error "Registo SRV (FQDN) ou DNS inválido" && exit 1
   return 0
 }
 
@@ -72,22 +72,22 @@ dep_install() {
 }
 
 confirm() {
-  output "This script will perform a HTTPS request to the endpoint $CHECKIP_URL"
-  output "The official check-IP service for this script, https://checkip.pterodactyl-installer.se"
-  output "- will not log or share any IP-information with any third-party."
-  output "If you would like to use another service, feel free to modify the script."
+  output "Este script realizará um pedido HTTPS para o ponto final $CHECKIP_URL"
+  output "O serviço oficial de verificação de IP para este script, https://checkip.pterodactyl-installer.se"
+  output "- não registará nem compartilhara qualquer informação de IP com terceiros."
+  output "Se desejar utilizar outro serviço, sinta-se à vontade para modificar o guião."
 
-  echo -e -n "* I agree that this HTTPS request is performed (y/N): "
+  echo -e -n "* Concordo que este pedido HTTPS seja realizado (s/N): "
   read -r confirm
-  [[ "$confirm" =~ [Yy] ]] || (error "User did not agree" && false)
+  [[ "$confirm" =~ [Ss] ]] || (error "O utilizador não concordou" && false)
 }
 
 dns_verify() {
-  output "Resolving DNS for $fqdn"
+  output "Resolvendo DNS para o SRV (FQDN): $fqdn"
   ip=$(curl -4 -s $CHECKIP_URL)
   dns_record=$(dig +short @$DNS_SERVER "$fqdn" | tail -n1)
   [ "${ip}" != "${dns_record}" ] && fail
-  output "DNS verified!"
+  output "DNS verificado!"
 }
 
 main() {
