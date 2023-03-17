@@ -75,7 +75,7 @@ main() {
   echo -e -n "* Continuar com a desinstalação? (s/N): "
   read -r CONFIRM
   if [[ "$CONFIRM" =~ [Ss] ]]; then
-    run_installer "uninstall"
+    run_installer "desinstalar"
   else
     error "Desinstalação abortada."
     exit 1
