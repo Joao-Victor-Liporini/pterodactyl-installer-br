@@ -57,12 +57,12 @@ execute() {
   run_ui "${1//_canary/}" |& tee -a $LOG_PATH
 
   if [[ -n $2 ]]; then
-    echo -e -n "* Instalação de $1 concluído. Deseja proceder à instalação de $2? (s/N): "
+    echo -e -n "* Instalação do $1 concluído. Deseja proceder à instalação do $2? (s/N): "
     read -r CONFIRM
     if [[ "$CONFIRM" =~ [Ss] ]]; then
       execute "$2"
     else
-      error "Instalação de $2 abortada."
+      error "Instalação do $2 abortada."
       exit 1
     fi
   fi
