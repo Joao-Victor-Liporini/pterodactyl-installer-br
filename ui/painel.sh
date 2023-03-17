@@ -202,7 +202,7 @@ main() {
   echo -e -n "\n* Configuração inicial concluída. Continuar com a instalação? (s/N): "
   read -r CONFIRM
   if [[ "$CONFIRM" =~ [Ss] ]]; then
-    run_installer "Painel"
+    run_installer "painel"
   else
     error "Instalação abortada."
     exit 1
