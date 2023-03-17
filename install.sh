@@ -85,15 +85,15 @@ while [ "$done" == false ]; do
   )
 
   actions=(
-    "panel"
+    "painel"
     "wings"
-    "panel;wings"
-    "uninstall"
+    "painel;wings"
+    "desinstalar"
 
-    "panel_canary"
+    "painel_canary"
     "wings_canary"
-    "panel_canary;wings_canary"
-    "uninstall_canary"
+    "painel_canary;wings_canary"
+    "desinstalar_canary"
   )
 
   output "O que gostaria de fazer?"
