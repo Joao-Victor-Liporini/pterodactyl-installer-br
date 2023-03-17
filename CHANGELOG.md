@@ -1,6 +1,11 @@
 # Changelog
 
 This project follows the [semantic versioning](https://semver.org) convention. Changelog points should be divided into fixed, changed, or added.
+## v0.13.0 (lançado em 16-03-2023)
+
+### Atualizado
+
+- Script traduzido para o português brasileiro
 
 ## v0.12.3 (released on 2023-02-18)
 
