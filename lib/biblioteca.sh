@@ -134,7 +134,7 @@ welcome() {
   output "Nem mesmo ao Projeto oficial Pterodactyl."
   output ""
   output "Rodando no SO: $OS Versão: $OS_VER."
-  if [ "$1" == "panel" ]; then
+  if [ "$1" == "painel" ]; then
     output "O Lançamento mais recente do Painel Next-Panel/Pterodactyl-BR é $PTERODACTYL_PANEL_VERSION"
   elif [ "$1" == "wings" ]; then
     output "O Lançamento mais recente do Wings pterodactyl/wings é $PTERODACTYL_WINGS_VERSION"
@@ -151,17 +151,17 @@ get_latest_release() {
 }
 
 get_latest_versions() {
-  output "Retrieving release information..."
+  output "Recebendo informações do lançamento..."
   PTERODACTYL_PANEL_VERSION=$(get_latest_release "Next-Panel/Pterodactyl-BR")
   PTERODACTYL_WINGS_VERSION=$(get_latest_release "pterodactyl/wings")
 }
 
 update_lib_source() {
   GITHUB_URL="$GITHUB_BASE_URL/$GITHUB_SOURCE"
-  rm -rf /tmp/lib.sh
-  curl -sSL -o /tmp/lib.sh "$GITHUB_URL"/lib/lib.sh
+  rm -rf /tmp/biblioteca.sh
+  curl -sSL -o /tmp/biblioteca.sh "$GITHUB_URL"/lib/biblioteca.sh
   # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh
+  source /tmp/biblioteca.sh
 }
 
 run_installer() {
