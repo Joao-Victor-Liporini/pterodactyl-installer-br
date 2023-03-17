@@ -102,7 +102,7 @@ dep_install() {
     ;;
   esac
 
-  # Update the new repos
+  # Update the new repos.
   update_repos
 
   # Install dependencies
