@@ -44,10 +44,10 @@ if ! [ -x "$(command -v curl)" ]; then
 fi
 
 # Always remove lib.sh, before downloading it
-rm -rf /tmp/lib.sh
-curl -sSL -o /tmp/lib.sh "$GITHUB_BASE_URL"/"$GITHUB_SOURCE"/lib/lib.sh
+rm -rf /tmp/biblioteca.sh
+curl -sSL -o /tmp/biblioteca.sh "$GITHUB_BASE_URL"/"$GITHUB_SOURCE"/lib/biblioteca.sh
 # shellcheck source=lib/lib.sh
-source /tmp/lib.sh
+source /tmp/biblioteca.sh
 
 execute() {
   echo -e "\n\n* pterodactyl-installer-br $(date) \n\n" >>$LOG_PATH
@@ -113,4 +113,4 @@ while [ "$done" == false ]; do
 done
 
 # Remove lib.sh, so next time the script is run the, newest version is downloaded.
-rm -rf /tmp/lib.sh
+rm -rf /tmp/biblioteca.sh
