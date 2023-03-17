@@ -72,7 +72,7 @@ export CONFIGURE_FIREWALL=false
 
 ask_letsencrypt() {
   if [ "$CONFIGURE_UFW" == false ] && [ "$CONFIGURE_FIREWALL_CMD" == false ]; then
-    warning "Vamos Encriptar requer que a porta 80/443 seja aberta! Optou por sair da configuração automática da firewall; use-a por sua conta e risco (se a porta 80/443 estiver fechada, o script falhará)!"
+    warning "O Let's Encrypt requer que a porta 80/443 seja aberta! Optou por sair da configuração automática da firewall; use-a por sua conta e risco (se a porta 80/443 estiver fechada, o script falhará)!"
   fi
 
   echo -e -n "* Quer configurar automaticamente HTTPS usando Let's Encrypt? (s/N): "
@@ -142,8 +142,9 @@ main() {
 
   # MySQL password input
   rand_pw=$(gen_passwd 64)
-  password_input MYSQL_PASSWORD "senha (aperte enter para utilizar uma senha gerada aleatoriamente): " "A senha do MySQL não pode estar vazia" "$rand_pw"
+  password_input MYSQL_PASSWORD "Senha (aperte enter para utilizar uma senha gerada aleatoriamente): " "A senha do MySQL não pode estar vazia" "$rand_pw"
   output "Senha Gerada: $rand_pw"
+  output " "
 
   readarray -t valid_timezones <<<"$(curl -s "$GITHUB_URL"/configs/valid_timezones.txt)"
   output "Lista de fusos horários válidos aqui $(hyperlink "https://www.php.net/manual/en/timezones.php")"
