@@ -1,4 +1,4 @@
-# :bird: pterodactyl-installer
+# :bird: pterodactyl-installer-br
 
 ![Teste do Painel](https://github.com/Joao-Victor-Liporini/pterodactyl-installer-br/actions/workflows/panel.yml/badge.svg)
 ![Teste do Wings](https://github.com/Joao-Victor-Liporini/pterodactyl-installer-br/actions/workflows/wings.yml/badge.svg)
