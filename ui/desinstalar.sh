@@ -53,7 +53,7 @@ main() {
     output "A instalação do painel foi detectada."
     echo -e -n "* Quer remover o painel? (s/N): "
     read -r RM_PANEL_INPUT
-    [[ "$RM_PANEL_INPUT" =~ [Ss] ]] && RM_PANEL=true
+    [[ "$RM_PANEL_INPUT" =~ [SsYy] ]] && RM_PANEL=true
   fi
 
   if [ -d "/etc/pterodactyl" ]; then
@@ -61,7 +61,7 @@ main() {
     warning "Isto irá remover todos os servidores!"
     echo -e -n "* Quer remover o wings (daemon)? (s/N): "
     read -r RM_WINGS_INPUT
-    [[ "$RM_WINGS_INPUT" =~ [Ss] ]] && RM_WINGS=true
+    [[ "$RM_WINGS_INPUT" =~ [SsYy] ]] && RM_WINGS=true
   fi
 
   if [ "$RM_PANEL" == false ] && [ "$RM_WINGS" == false ]; then
@@ -74,7 +74,7 @@ main() {
   # confirm uninstallation
   echo -e -n "* Continuar com a desinstalação? (s/N): "
   read -r CONFIRM
-  if [[ "$CONFIRM" =~ [Ss] ]]; then
+  if [[ "$CONFIRM" =~ [SsYy] ]]; then
     run_installer "desinstalar"
   else
     error "Desinstalação abortada."

@@ -35,7 +35,7 @@ set -e
 fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/lib.sh)
+  source /tmp/biblioteca.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/biblioteca.sh)
   ! fn_exists lib_loaded && echo "* ERRO: Não foi possível carregar o script da biblioteca (biblioteca.sh)" && exit 1
 fi
 
@@ -56,7 +56,7 @@ export EMAIL=""
 export CONFIGURE_DBHOST=false
 export CONFIGURE_DB_FIREWALL=false
 export MYSQL_DBHOST_HOST="127.0.0.1"
-export MYSQL_DBHOST_USER="pterodactyluser"
+export MYSQL_DBHOST_USER="usuariopterodactyl"
 export MYSQL_DBHOST_PASSWORD=""
 
 # ------------ User input functions ------------ #
@@ -71,7 +71,7 @@ ask_letsencrypt() {
   echo -e -n "* Quer configurar automaticamente HTTPS usando Let's Encrypt? (s/N): "
   read -r CONFIRM_SSL
 
-  if [[ "$CONFIRM_SSL" =~ [Ss] ]]; then
+  if [[ "$CONFIRM_SSL" =~ [SsYy] ]]; then
     CONFIGURE_LETSENCRYPT=true
   fi
 }
@@ -80,7 +80,7 @@ ask_database_user() {
   echo -n "* Deseja configurar automaticamente um utilizador para a host da database? (s/N): "
   read -r CONFIRM_DBHOST
 
-  if [[ "$CONFIRM_DBHOST" =~ [Ss] ]]; then
+  if [[ "$CONFIRM_DBHOST" =~ [SsYy] ]]; then
     ask_database_external
     CONFIGURE_DBHOST=true
   fi
@@ -90,7 +90,7 @@ ask_database_external() {
   echo -n "* Quer configurar o MySQL para ser conectado externamente? (s/N): "
   read -r CONFIRM_DBEXTERNAL
 
-  if [[ "$CONFIRM_DBEXTERNAL" =~ [Ss] ]]; then
+  if [[ "$CONFIRM_DBEXTERNAL" =~ [SsYy] ]]; then
     echo -n "* Introduza o endereço do painel (em branco para qualquer endereço): "
     read -r CONFIRM_DBEXTERNAL_HOST
     if [ "$CONFIRM_DBEXTERNAL_HOST" == "" ]; then
@@ -107,7 +107,7 @@ ask_database_firewall() {
   warning "Permitir tráfego de entrada à porta 3306 (MySQL) pode ser potencialmente um risco de segurança, a menos que saiba o que está fazendo!"
   echo -n "* Gostaria de permitir o tráfego de entrada para a porta 3306? (s/N): "
   read -r CONFIRM_DB_FIREWALL
-  if [[ "$CONFIRM_DB_FIREWALL" =~ [Ss] ]]; then
+  if [[ "$CONFIRM_DB_FIREWALL" =~ [SsYy] ]]; then
     CONFIGURE_DB_FIREWALL=true
   fi
 }
@@ -122,7 +122,7 @@ main() {
     warning "O script detectou que já tem o Pterodactyl Wings no seu sistema! Não pode executar o script várias vezes, ele falhará!"
     echo -e -n "* Tem certeza que quer prosseguir? (s/N): "
     read -r CONFIRM_PROCEED
-    if [[ ! "$CONFIRM_PROCEED" =~ [Ss] ]]; then
+    if [[ ! "$CONFIRM_PROCEED" =~ [SsYy] ]]; then
       error "Instalação abortada!"
       exit 1
     fi
@@ -180,7 +180,7 @@ main() {
       [ "$ASK" == true ] && echo -e -n "* Ainda quer configurar automaticamente HTTPS usando Let's Encrypt? (s/N): "
       [ "$ASK" == true ] && read -r CONFIRM_SSL
 
-      if [[ ! "$CONFIRM_SSL" =~ [Ss] ]] && [ "$ASK" == true ]; then
+      if [[ ! "$CONFIRM_SSL" =~ [SsYy] ]] && [ "$ASK" == true ]; then
         CONFIGURE_LETSENCRYPT=false
         FQDN=""
       fi
@@ -200,7 +200,7 @@ main() {
   echo -n "* Prosseguir com a instalação? (s/N): "
 
   read -r CONFIRM
-  if [[ "$CONFIRM" =~ [Ss] ]]; then
+  if [[ "$CONFIRM" =~ [SsYy] ]]; then
     run_installer "wings"
   else
     error "Instalação abortada."

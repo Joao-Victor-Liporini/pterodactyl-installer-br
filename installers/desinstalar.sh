@@ -105,9 +105,9 @@ rm_database() {
   valid_db=$(mysql -u root -e "SELECT schema_name FROM information_schema.schemata;" | grep -v -E -- 'schema_name|information_schema|performance_schema|mysql')
   warning "Be careful! This database will be deleted!"
   if [[ "$valid_db" == *"panel"* ]]; then
-    echo -n "* Database called panel has been detected. Is it the pterodactyl database? (y/N): "
+    echo -n "* Foi detectada uma database chamada painel. Ela é a database do pterodactyl? (s/N): "
     read -r is_panel
-    if [[ "$is_panel" =~ [Yy] ]]; then
+    if [[ "$is_panel" =~ [SsYy] ]]; then
       DATABASE=panel
     else
       print_list "$valid_db"

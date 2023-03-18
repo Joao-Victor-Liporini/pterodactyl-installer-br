@@ -59,7 +59,7 @@ execute() {
   if [[ -n $2 ]]; then
     echo -e -n "* Instalação do $1 concluído. Deseja proceder à instalação do $2? (s/N): "
     read -r CONFIRM
-    if [[ "$CONFIRM" =~ [Ss] ]]; then
+    if [[ "$CONFIRM" =~ [SsYy] ]]; then
       execute "$2"
     else
       error "Instalação do $2 abortada."
@@ -73,10 +73,10 @@ welcome ""
 done=false
 while [ "$done" == false ]; do
   options=(
-    "Instalar o painel"
+    "Instalar o Painel"
     "Instalar o Wings"
-    "Instalar ambos [0] e [1] na mesma máquina (o roteiro das asas corre depois do painel)"
-    "Desinstalar painel ou wings\n"
+    "Instalar ambos [0] e [1] na mesma máquina (o script do wings funciona depois do painel)"
+    "Desinstalar painel ou wings\n *"
 
     "Instalar o Painel com versão canária do script (as versões que vivem em mestre, podem ser quebradas!)"
     "Instalar o Wings com versão canária do script (as versões que vivem em mestre, podem ser quebradas!)"

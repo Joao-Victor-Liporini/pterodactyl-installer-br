@@ -356,7 +356,7 @@ ask_firewall() {
     echo -e -n "* Deseja configurar automaticamente o UFW (firewall)? (s/N): "
     read -r CONFIRM_UFW
 
-    if [[ "$CONFIRM_UFW" =~ [Ss] ]]; then
+    if [[ "$CONFIRM_UFW" =~ [SsYy] ]]; then
       eval "$__resultvar="'true'""
     fi
     ;;
@@ -364,7 +364,7 @@ ask_firewall() {
     echo -e -n "* Deseja configurar automaticamente o firewall-cmd (firewall)? (s/N): "
     read -r CONFIRM_FIREWALL_CMD
 
-    if [[ "$CONFIRM_FIREWALL_CMD" =~ [Ss] ]]; then
+    if [[ "$CONFIRM_FIREWALL_CMD" =~ [SsYy] ]]; then
       eval "$__resultvar="'true'""
     fi
     ;;
@@ -432,7 +432,7 @@ check_os_x86_64() {
     echo -e -n "* Tem certeza que quer prosseguir? (s/N):"
     read -r choice
 
-    if [[ ! "$choice" =~ [Ss] ]]; then
+    if [[ ! "$choice" =~ [SsYy] ]]; then
       error "Instalação abortada!"
       exit 1
     fi

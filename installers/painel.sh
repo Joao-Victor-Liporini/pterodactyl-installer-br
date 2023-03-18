@@ -46,7 +46,7 @@ fi
 FQDN="${FQDN:-localhost}"
 
 # Default MySQL credentials
-MYSQL_DB="${MYSQL_DB:-panel}"
+MYSQL_DB="${MYSQL_DB:-painel}"
 MYSQL_USER="${MYSQL_USER:-pterodactyl}"
 MYSQL_PASSWORD="${MYSQL_PASSWORD:-$(gen_passwd 64)}"
 
@@ -358,7 +358,7 @@ letsencrypt() {
     echo -n "* Continuar Configurando o SSL? (s/N): "
     read -r CONFIGURE_SSL
 
-    if [[ "$CONFIGURE_SSL" =~ [Ss] ]]; then
+    if [[ "$CONFIGURE_SSL" =~ [SsYy] ]]; then
       ASSUME_SSL=true
       CONFIGURE_LETSENCRYPT=false
       configure_nginx

@@ -56,7 +56,7 @@ fail() {
   echo -n "* Continue de qualquer forma (a sua instalação será interrompida se não souber o que está fazendo)? (s/N): "
   read -r override
 
-  [[ ! "$override" =~ [Ss] ]] && error "Registo SRV (FQDN) ou DNS inválido" && exit 1
+  [[ ! "$override" =~ [SsYy] ]] && error "Registo SRV (FQDN) ou DNS inválido" && exit 1
   return 0
 }
 
@@ -83,7 +83,7 @@ confirm() {
 
   echo -e -n "* Concordo que este pedido HTTPS seja realizado (s/N): "
   read -r confirm
-  [[ "$confirm" =~ [Ss] ]] || (error "O utilizador não concordou" && false)
+  [[ "$confirm" =~ [SsYy] ]] || (error "O utilizador não concordou" && false)
 }
 
 dns_verify() {
