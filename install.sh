@@ -23,7 +23,7 @@ set -e
 #                                                                                    #
 # https://github.com/pterodactyl-installer/pterodactyl-installer/blob/master/LICENSE #
 #                                                                                    #
-# This script is not associated with the official Pterodactyl Project.               #
+# This script is not associated with the official Pterodactyl Project                #
 # https://github.com/pterodactyl-installer/pterodactyl-installer                     #
 #                                                                                    #
 ######################################################################################
